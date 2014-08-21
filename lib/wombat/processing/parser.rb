@@ -41,9 +41,9 @@ module Wombat
             parser = @page.parser
             parser.headers = @page.header
           else
-            @page = RestClient.get(url) unless @page
-            parser = Nokogiri::XML @page
-            parser.headers = @page.headers
+            @page = @mechanize.get(url) unless @page
+            parser = Nokogiri::XML @page.body
+            parser.headers = @page.header
           end
           @response_code = @page.code.to_i if @page.respond_to? :code
           parser
